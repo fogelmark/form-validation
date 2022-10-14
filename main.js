@@ -40,24 +40,20 @@ const validatePassword = (id) => {
     
     const regEx = /^[A-Za-z]\w{5,11}$/ // password måste vara minst 6, max 12 tecken
 
-    if (password.value.match(regEx)) {
-        console.log(password.value);
-        return true
-    } else {
+    if (!password.value.match(regEx)) {
         console.error('Password must contain 6-12 signs');
-        return false
+    } else {
+        console.log(password.value);
     }
 }
 
 const validateRepeatPassword = (id) => {
     const repeatPassword = document.querySelector(id)
 
-    if (password.value === repeatPassword.value) {
-        console.log('password matched');
+    if (repeatPassword.value != password.value) {
+        console.error('Passwords does not match');
+    } else {
         return true
-    } else if (repeatPassword != password) {
-        console.error('password did not match');
-        return false
     }
 }
 
@@ -92,37 +88,44 @@ form.addEventListener('submit', e => {
     const errors = []
     console.clear();
 
+    validateName('#firstName')
+    validateName('#lastName')
+    validateEmail('#email')
+    validatePassword('#password')
+    validateRepeatPassword('#repeatPassword')
+    validateTerms('#terms')
+
     
-    for(let i = 0; i < form.length; i++) {
+    // for(let i = 0; i < form.length; i++) {
 
-        const validateId = '#' + form[i].id
+    //     const validateId = '#' + form[i].id
 
-        if (form[i].type === 'text') {
-            errors[i] = validateName(validateId)
-        } else if (form[i].type === 'email') {
-            errors[i] = validateEmail(validateId)
-        } else if (form[i].type === 'password') {
-            errors[i] = validatePassword(validateId)
-        } else if (form[i].type === 'password') {
-            errors[i] = validateRepeatPassword(validateId)
-        } else if (form[i].type === 'checkbox') {
-            errors[i] = validateTerms(validateId)
-        }
+    //     if (form[i].type === 'text') {
+    //         errors[i] = validateName(validateId)
+    //     } else if (form[i].type === 'email') {
+    //         errors[i] = validateEmail(validateId)
+    //     } else if (form[i].type === 'password') {
+    //         errors[i] = validatePassword(validateId)
+    //     } else if (form[i].type === 'password') {
+    //         errors[i] = validateRepeatPassword(validateId)
+    //     } else if (form[i].type === 'checkbox') {
+    //         errors[i] = validateTerms(validateId)
+    //     }
 
-    }
+    // }
 
-        if (errors.includes(false)) {
-            setError()
-        } else {
-            const user = {
-                firstName: firstName.value,
-                lastName: lastName.value,
-                email: email.value,
-                password: password.value
-            }
-            setSuccess()
-            console.log(user);
-        }
-        console.log(errors);
+    //     if (errors.includes(false)) {
+    //         setError()
+    //     } else {
+    //         const user = {
+    //             firstName: firstName.value,
+    //             lastName: lastName.value,
+    //             email: email.value,
+    //             password: password.value
+    //         }
+    //         setSuccess()
+    //         console.log(user);
+    //     }
+    //     console.log(errors);
 
     })
