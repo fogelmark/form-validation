@@ -137,6 +137,7 @@ form.addEventListener("submit", (e) => {
       password: password.value,
     };
     valSuccess();
+    form.reset()
     console.log(user);
   }
 });
