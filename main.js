@@ -1,5 +1,6 @@
 const form = document.querySelector("#validationForm");
 const errorMsg = document.querySelector("#errorMessage");
+//const text = document.querySelector('.input-group')
 
 const validateFirstName = (id) => {
   const name = document.querySelector(id);
@@ -11,8 +12,11 @@ const validateFirstName = (id) => {
     !name.value.match(regEx)
   ) {
     console.error("Invalid first name");
+    name.classList.add('error')
+    //text.style.color = 'red';
     return false;
   } else {
+    name.classList.remove('error')
     return true;
   }
 };
@@ -27,8 +31,10 @@ const validateLastName = (id) => {
     !name.value.match(regEx)
   ) {
     console.error("Invalid last name");
+    name.classList.add('error')
     return false;
   } else {
+    name.classList.remove('error')
     return true;
   }
 };
@@ -40,20 +46,23 @@ const validateEmail = (id) => {
 
   if (!regEx.test(email.value)) {
     console.error("Invalid email");
+    email.classList.add('error')
     return false;
   } else {
+    email.classList.remove('error')
     return true;
   }
 };
 
 const validatePassword = (id) => {
   const password = document.querySelector(id);
-  const regEx = /^[A-Za-z]\w{5,11}$/; // password måste vara minst 6, max 12 tecken
 
-  if (!password.value.match(regEx)) {
-    console.error("Password must contain 6-12 signs");
+  if (password.value.length < 6) {
+    console.error("Password must contain at least 6 characters");
+    password.classList.add('error')
     return false;
   } else {
+    password.classList.remove('error')
     return true;
   }
 };
@@ -62,10 +71,12 @@ const validateRepeatPassword = (id) => {
   const password = document.querySelector("#password");
   const repeatPassword = document.querySelector(id);
 
-  if (repeatPassword.value != password.value) {
+  if (repeatPassword.value != password.value || repeatPassword.value === '') {
     console.error("Passwords does not match");
+    repeatPassword.classList.add('error')
     return false;
   } else {
+    repeatPassword.classList.remove('error')
     return true;
   }
 };
@@ -87,7 +98,7 @@ const valSuccess = () => {
   return true;
 };
 
-const valError = () => {
+const valError = (id) => {
   errorMsg.classList.remove("d-none");
   console.error("Alla fält måste vara korrekt ifyllda!");
   return false;
@@ -96,7 +107,7 @@ const valError = () => {
 form.addEventListener("submit", (e) => {
   e.preventDefault();
 
-  console.clear(); // Clearar console så det blir lättare vid error testing
+  console.clear(); // Clearar console så det blir visuellt lättare vid error testing
   const errors = [];
 
   for (let i = 0; i < form.length; i++) {
@@ -137,7 +148,7 @@ form.addEventListener("submit", (e) => {
       password: password.value,
     };
     valSuccess();
-    form.reset()
+    //form.reset()
     console.log(user);
   }
 });
